@@ -11,7 +11,7 @@
 	<!-- send hyq urdf to param server and spawn it -->
 	<include file="$(find go2_description)/launch/upload.launch">	</include>
 
-	<node name="robot_hardware_interface" pkg="go2_hardware_interface" type="ros_control_node" respawn="false" output="screen"/>
+	<node name="robot_hardware_interface" pkg="go2_hardware_interface" type="go2_ros_control_node" respawn="false" output="screen"/>
 	
 	 <rosparam file="$(find ros_impedance_controller)/config/joint_state_publisher.yaml" ns="/go2" command="load"/>
 		
