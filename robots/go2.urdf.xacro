@@ -47,33 +47,62 @@
         </inertial>
     </link>
 
+    <!-- Unitree's go2.urdf placement, i.e. where the real robot's IMU is -->
     <joint name="imu_joint" type="fixed">
         <parent link="trunk"/>
         <child link="imu_link"/>
-        <origin rpy="0 0 0" xyz="-0.01592 -0.06659 -0.00617"/>
+        <origin rpy="0 0 0" xyz="-0.02557 0 0.04232"/>
     </joint>
 
+    <!-- Identical to Unitree's imu_link: a massless frame with no geometry. The Gazebo IMU sensor
+         (gazebo/gazebo.xacro) is attached here with zero extra offset. -->
     <link name="imu_link">
         <inertial>
-            <mass value="0.001"/>
             <origin rpy="0 0 0" xyz="0 0 0"/>
-            <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+            <mass value="0"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>
-        <visual>
+    </link>
+
+
+    <!-- Head shells (Unitree's head_upper / head_lower): collision only, negligible mass -->
+    <joint name="head_upper_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0.285 0 0.01"/>
+        <parent link="trunk"/>
+        <child link="head_upper"/>
+    </joint>
+    <link name="head_upper">
+        <inertial>
             <origin rpy="0 0 0" xyz="0 0 0"/>
-            <geometry>
-                <box size="0.001 0.001 0.001"/>
-            </geometry>
-            <!-- <material name="red"/> -->
-        </visual>
+            <mass value="0.001"/>
+            <inertia ixx="9.6e-06" ixy="0" ixz="0" iyy="9.6e-06" iyz="0" izz="9.6e-06"/>
+        </inertial>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <box size=".001 .001 .001"/>
+                <cylinder radius="0.05" length="0.09"/>
             </geometry>
         </collision>
     </link>
 
+    <joint name="head_lower_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0.008 0 -0.07"/>
+        <parent link="head_upper"/>
+        <child link="head_lower"/>
+    </joint>
+    <link name="head_lower">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="9.6e-06" ixy="0" ixz="0" iyy="9.6e-06" iyz="0" izz="9.6e-06"/>
+        </inertial>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.047"/>
+            </geometry>
+        </collision>
+    </link>
 
     <xacro:leg name="rf" mirror="-1" mirror_dae= "False" front_hind="1"  front_hind_dae="True"  />
     <xacro:leg name="lf" mirror="1"  mirror_dae="True"   front_hind="1"  front_hind_dae="True"  />
