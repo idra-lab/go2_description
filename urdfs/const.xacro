@@ -59,8 +59,16 @@
  
 
     <!-- joint limits -->
-    <xacro:property name="damping" value="0.0"/>
-    <xacro:property name="friction" value="0.0"/>
+    <!-- Joint model the RL policies are trained with: the PACE fit of the real robot
+         (safe_rl/assets.py, UNITREE_GO2_IDENTIFIED), averaged over the four legs per joint type.
+         Coulomb friction N m, viscous damping N m s/rad, reflected rotor inertia (armature) kg m^2,
+         applied by libjoint_armature_plugin (leg.xacro) since ODE has no armature. -->
+    <xacro:property name="joint_coulomb" value="${dict(haa=0.24, hfe=0.23, kfe=0.8)}"/>
+    <xacro:property name="joint_viscous" value="${dict(haa=0.25, hfe=0.22, kfe=0.29)}"/>
+    <xacro:property name="joint_armature" value="${dict(haa=0.02, hfe=0.023, kfe=0.037)}"/>
+
+    <!-- Contact damping, N s/m (leg.gazebo.xacro): at 100 the feet bounce on touchdown. -->
+    <xacro:property name="contact_kd" value="3000.0"/>
     <xacro:property name="haa_max" value="1.0472"/>
     <xacro:property name="haa_min" value="-1.0472"/>
     <xacro:property name="haa_velocity_max" value="30.1"/>

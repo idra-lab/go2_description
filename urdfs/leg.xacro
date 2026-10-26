@@ -25,7 +25,7 @@
             <parent link="trunk"/>
             <child link="${name}_hip"/>
             <axis xyz="1 0 0"/>
-            <dynamics damping="${damping}" friction="${friction}"/>
+            <dynamics damping="${joint_viscous['haa']}" friction="${joint_coulomb['haa']}"/>
             <xacro:if value="${(mirror_dae == True)}">
                 <limit effort="${haa_torque_max}" velocity="${haa_velocity_max}" lower="${haa_min}" upper="${haa_max}"/>
             </xacro:if>
@@ -75,7 +75,7 @@
             <parent link="${name}_hip"/>
             <child link="${name}_upperleg"/>
             <axis xyz="0 1 0"/>
-            <dynamics damping="${damping}" friction="${friction}"/>
+            <dynamics damping="${joint_viscous['hfe']}" friction="${joint_coulomb['hfe']}"/>
             <xacro:if value="${front_hind_dae == True}">
                 <limit effort="${hfe_torque_max}" velocity="${hfe_velocity_max}" lower="${hfe_min}" upper="${hfe_max}"/>
             </xacro:if>
@@ -120,7 +120,7 @@
             <parent link="${name}_upperleg"/>
             <child link="${name}_lowerleg"/>
             <axis xyz="0 1 0"/>
-            <dynamics damping="${damping}" friction="${friction}"/>
+            <dynamics damping="${joint_viscous['kfe']}" friction="${joint_coulomb['kfe']}"/>
             <limit effort="${kfe_torque_max}" velocity="${kfe_velocity_max}" lower="${kfe_min}" upper="${kfe_max}"/>
         </joint>
 
@@ -226,5 +226,14 @@
 
         <xacro:leg_transmission name="${name}"/>
         <xacro:leg_gazebo name="${name}"/>
+
+        <!-- Reflected rotor inertia (const.xacro), built from gazebo_plugins/joint_armature_plugin -->
+        <gazebo>
+            <plugin name="joint_armature_${name}" filename="libjoint_armature_plugin.so">
+                <joint name="${name}_haa_joint">${joint_armature['haa']}</joint>
+                <joint name="${name}_hfe_joint">${joint_armature['hfe']}</joint>
+                <joint name="${name}_kfe_joint">${joint_armature['kfe']}</joint>
+            </plugin>
+        </gazebo>
     </xacro:macro>
 </robot>

@@ -202,7 +202,7 @@
     <parent link="trunk"/>
     <child link="rf_hip"/>
     <axis xyz="1 0 0"/>
-    <dynamics damping="0.0" friction="0.0"/>
+    <dynamics damping="0.25" friction="0.24"/>
     <limit effort="23.7" lower="-1.0472" upper="1.0472" velocity="30.1"/>
   </joint>
   <link name="rf_hip">
@@ -230,7 +230,7 @@
     <parent link="rf_hip"/>
     <child link="rf_upperleg"/>
     <axis xyz="0 1 0"/>
-    <dynamics damping="0.0" friction="0.0"/>
+    <dynamics damping="0.22" friction="0.23"/>
     <limit effort="23.7" lower="-1.5708" upper="3.4907" velocity="30.1"/>
   </joint>
   <link name="rf_upperleg">
@@ -258,7 +258,7 @@
     <parent link="rf_upperleg"/>
     <child link="rf_lowerleg"/>
     <axis xyz="0 1 0"/>
-    <dynamics damping="0.0" friction="0.0"/>
+    <dynamics damping="0.29" friction="0.8"/>
     <limit effort="45.43" lower="-2.7227" upper="-0.83776" velocity="15.7"/>
   </joint>
   <link name="rf_lowerleg">
@@ -402,7 +402,7 @@
 	    </gazebo-->
   <gazebo reference="rf_upperleg">
     <kp>1000000.0</kp>
-    <kd>100.0</kd>
+    <kd>3000.0</kd>
     <mu1>1.5</mu1>
     <mu2>1.5</mu2>
     <fdir1>1 0 0</fdir1>
@@ -411,7 +411,7 @@
   </gazebo>
   <gazebo reference="rf_lowerleg">
     <kp>1000000.0</kp>
-    <kd>100.0</kd>
+    <kd>3000.0</kd>
     <mu1>1.0</mu1>
     <mu2>1.0</mu2>
     <maxVel>1.0</maxVel>
@@ -419,7 +419,7 @@
   </gazebo>
   <gazebo reference="rf_foot">
     <kp>1000000.0</kp>
-    <kd>100.0</kd>
+    <kd>3000.0</kd>
     <mu1>1.0</mu1>
     <mu2>1.0</mu2>
     <maxVel>1.0</maxVel>
@@ -440,12 +440,20 @@
     </sensor>
     <material>Gazebo/Black</material>
   </gazebo>
+  <!-- Reflected rotor inertia (const.xacro), built from gazebo_plugins/joint_armature_plugin -->
+  <gazebo>
+    <plugin filename="libjoint_armature_plugin.so" name="joint_armature_rf">
+      <joint name="rf_haa_joint">0.02</joint>
+      <joint name="rf_hfe_joint">0.023</joint>
+      <joint name="rf_kfe_joint">0.037</joint>
+    </plugin>
+  </gazebo>
   <joint name="lf_haa_joint" type="revolute">
     <origin rpy="0 0 0" xyz="0.1934 0.0465 0"/>
     <parent link="trunk"/>
     <child link="lf_hip"/>
     <axis xyz="1 0 0"/>
-    <dynamics damping="0.0" friction="0.0"/>
+    <dynamics damping="0.25" friction="0.24"/>
     <limit effort="23.7" lower="-1.0472" upper="1.0472" velocity="30.1"/>
   </joint>
   <link name="lf_hip">
@@ -473,7 +481,7 @@
     <parent link="lf_hip"/>
     <child link="lf_upperleg"/>
     <axis xyz="0 1 0"/>
-    <dynamics damping="0.0" friction="0.0"/>
+    <dynamics damping="0.22" friction="0.23"/>
     <limit effort="23.7" lower="-1.5708" upper="3.4907" velocity="30.1"/>
   </joint>
   <link name="lf_upperleg">
@@ -501,7 +509,7 @@
     <parent link="lf_upperleg"/>
     <child link="lf_lowerleg"/>
     <axis xyz="0 1 0"/>
-    <dynamics damping="0.0" friction="0.0"/>
+    <dynamics damping="0.29" friction="0.8"/>
     <limit effort="45.43" lower="-2.7227" upper="-0.83776" velocity="15.7"/>
   </joint>
   <link name="lf_lowerleg">
@@ -645,7 +653,7 @@
 	    </gazebo-->
   <gazebo reference="lf_upperleg">
     <kp>1000000.0</kp>
-    <kd>100.0</kd>
+    <kd>3000.0</kd>
     <mu1>1.5</mu1>
     <mu2>1.5</mu2>
     <fdir1>1 0 0</fdir1>
@@ -654,7 +662,7 @@
   </gazebo>
   <gazebo reference="lf_lowerleg">
     <kp>1000000.0</kp>
-    <kd>100.0</kd>
+    <kd>3000.0</kd>
     <mu1>1.0</mu1>
     <mu2>1.0</mu2>
     <maxVel>1.0</maxVel>
@@ -662,7 +670,7 @@
   </gazebo>
   <gazebo reference="lf_foot">
     <kp>1000000.0</kp>
-    <kd>100.0</kd>
+    <kd>3000.0</kd>
     <mu1>1.0</mu1>
     <mu2>1.0</mu2>
     <maxVel>1.0</maxVel>
@@ -683,12 +691,20 @@
     </sensor>
     <material>Gazebo/Black</material>
   </gazebo>
+  <!-- Reflected rotor inertia (const.xacro), built from gazebo_plugins/joint_armature_plugin -->
+  <gazebo>
+    <plugin filename="libjoint_armature_plugin.so" name="joint_armature_lf">
+      <joint name="lf_haa_joint">0.02</joint>
+      <joint name="lf_hfe_joint">0.023</joint>
+      <joint name="lf_kfe_joint">0.037</joint>
+    </plugin>
+  </gazebo>
   <joint name="rh_haa_joint" type="revolute">
     <origin rpy="0 0 0" xyz="-0.1934 -0.0465 0"/>
     <parent link="trunk"/>
     <child link="rh_hip"/>
     <axis xyz="1 0 0"/>
-    <dynamics damping="0.0" friction="0.0"/>
+    <dynamics damping="0.25" friction="0.24"/>
     <limit effort="23.7" lower="-1.0472" upper="1.0472" velocity="30.1"/>
   </joint>
   <link name="rh_hip">
@@ -716,7 +732,7 @@
     <parent link="rh_hip"/>
     <child link="rh_upperleg"/>
     <axis xyz="0 1 0"/>
-    <dynamics damping="0.0" friction="0.0"/>
+    <dynamics damping="0.22" friction="0.23"/>
     <limit effort="23.7" lower="-0.5236" upper="4.5379" velocity="30.1"/>
   </joint>
   <link name="rh_upperleg">
@@ -744,7 +760,7 @@
     <parent link="rh_upperleg"/>
     <child link="rh_lowerleg"/>
     <axis xyz="0 1 0"/>
-    <dynamics damping="0.0" friction="0.0"/>
+    <dynamics damping="0.29" friction="0.8"/>
     <limit effort="45.43" lower="-2.7227" upper="-0.83776" velocity="15.7"/>
   </joint>
   <link name="rh_lowerleg">
@@ -888,7 +904,7 @@
 	    </gazebo-->
   <gazebo reference="rh_upperleg">
     <kp>1000000.0</kp>
-    <kd>100.0</kd>
+    <kd>3000.0</kd>
     <mu1>1.5</mu1>
     <mu2>1.5</mu2>
     <fdir1>1 0 0</fdir1>
@@ -897,7 +913,7 @@
   </gazebo>
   <gazebo reference="rh_lowerleg">
     <kp>1000000.0</kp>
-    <kd>100.0</kd>
+    <kd>3000.0</kd>
     <mu1>1.0</mu1>
     <mu2>1.0</mu2>
     <maxVel>1.0</maxVel>
@@ -905,7 +921,7 @@
   </gazebo>
   <gazebo reference="rh_foot">
     <kp>1000000.0</kp>
-    <kd>100.0</kd>
+    <kd>3000.0</kd>
     <mu1>1.0</mu1>
     <mu2>1.0</mu2>
     <maxVel>1.0</maxVel>
@@ -926,12 +942,20 @@
     </sensor>
     <material>Gazebo/Black</material>
   </gazebo>
+  <!-- Reflected rotor inertia (const.xacro), built from gazebo_plugins/joint_armature_plugin -->
+  <gazebo>
+    <plugin filename="libjoint_armature_plugin.so" name="joint_armature_rh">
+      <joint name="rh_haa_joint">0.02</joint>
+      <joint name="rh_hfe_joint">0.023</joint>
+      <joint name="rh_kfe_joint">0.037</joint>
+    </plugin>
+  </gazebo>
   <joint name="lh_haa_joint" type="revolute">
     <origin rpy="0 0 0" xyz="-0.1934 0.0465 0"/>
     <parent link="trunk"/>
     <child link="lh_hip"/>
     <axis xyz="1 0 0"/>
-    <dynamics damping="0.0" friction="0.0"/>
+    <dynamics damping="0.25" friction="0.24"/>
     <limit effort="23.7" lower="-1.0472" upper="1.0472" velocity="30.1"/>
   </joint>
   <link name="lh_hip">
@@ -959,7 +983,7 @@
     <parent link="lh_hip"/>
     <child link="lh_upperleg"/>
     <axis xyz="0 1 0"/>
-    <dynamics damping="0.0" friction="0.0"/>
+    <dynamics damping="0.22" friction="0.23"/>
     <limit effort="23.7" lower="-0.5236" upper="4.5379" velocity="30.1"/>
   </joint>
   <link name="lh_upperleg">
@@ -987,7 +1011,7 @@
     <parent link="lh_upperleg"/>
     <child link="lh_lowerleg"/>
     <axis xyz="0 1 0"/>
-    <dynamics damping="0.0" friction="0.0"/>
+    <dynamics damping="0.29" friction="0.8"/>
     <limit effort="45.43" lower="-2.7227" upper="-0.83776" velocity="15.7"/>
   </joint>
   <link name="lh_lowerleg">
@@ -1131,7 +1155,7 @@
 	    </gazebo-->
   <gazebo reference="lh_upperleg">
     <kp>1000000.0</kp>
-    <kd>100.0</kd>
+    <kd>3000.0</kd>
     <mu1>1.5</mu1>
     <mu2>1.5</mu2>
     <fdir1>1 0 0</fdir1>
@@ -1140,7 +1164,7 @@
   </gazebo>
   <gazebo reference="lh_lowerleg">
     <kp>1000000.0</kp>
-    <kd>100.0</kd>
+    <kd>3000.0</kd>
     <mu1>1.0</mu1>
     <mu2>1.0</mu2>
     <maxVel>1.0</maxVel>
@@ -1148,7 +1172,7 @@
   </gazebo>
   <gazebo reference="lh_foot">
     <kp>1000000.0</kp>
-    <kd>100.0</kd>
+    <kd>3000.0</kd>
     <mu1>1.0</mu1>
     <mu2>1.0</mu2>
     <maxVel>1.0</maxVel>
@@ -1168,6 +1192,14 @@
       </plugin>
     </sensor>
     <material>Gazebo/Black</material>
+  </gazebo>
+  <!-- Reflected rotor inertia (const.xacro), built from gazebo_plugins/joint_armature_plugin -->
+  <gazebo>
+    <plugin filename="libjoint_armature_plugin.so" name="joint_armature_lh">
+      <joint name="lh_haa_joint">0.02</joint>
+      <joint name="lh_hfe_joint">0.023</joint>
+      <joint name="lh_kfe_joint">0.037</joint>
+    </plugin>
   </gazebo>
 </robot>
 

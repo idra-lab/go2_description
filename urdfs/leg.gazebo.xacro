@@ -28,7 +28,7 @@
 	    
 		<gazebo reference="${name}_upperleg">
 			<kp>1000000.0</kp>
-			<kd>100.0</kd>
+			<kd>${contact_kd}</kd>
 			<mu1>1.5</mu1>
 			<mu2>1.5</mu2>
 			<fdir1>1 0 0</fdir1>
@@ -37,7 +37,7 @@
 		</gazebo>
 		<gazebo reference="${name}_lowerleg">
 			<kp>1000000.0</kp>
-			<kd>100.0</kd>
+			<kd>${contact_kd}</kd>
 			<mu1>1.0</mu1>
 			<mu2>1.0</mu2>
 			<maxVel>1.0</maxVel>
@@ -49,7 +49,7 @@
          
         <gazebo reference="${name}_foot">
             <kp>1000000.0</kp>
-            <kd>100.0</kd>
+            <kd>${contact_kd}</kd>
             <mu1>1.0</mu1>
             <mu2>1.0</mu2>
             <maxVel>1.0</maxVel>
