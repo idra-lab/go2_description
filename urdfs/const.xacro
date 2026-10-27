@@ -67,7 +67,7 @@
     <xacro:property name="joint_viscous" value="${dict(haa=0.25, hfe=0.22, kfe=0.29)}"/>
     <xacro:property name="joint_armature" value="${dict(haa=0.02, hfe=0.023, kfe=0.037)}"/>
 
-    <!-- Contact damping, N s/m (leg.gazebo.xacro): at 100 the feet bounce on touchdown. -->
+    <!-- Contact damping, N s/m (leg.gazebo.xacro and the body): at 100 the feet bounce on touchdown. -->
     <xacro:property name="contact_kd" value="3000.0"/>
     <xacro:property name="haa_max" value="1.0472"/>
     <xacro:property name="haa_min" value="-1.0472"/>

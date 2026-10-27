@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 from __future__ import print_function
-import rospy, sys, os, time
+import rospy, sys, os, time, math
 import string
 import warnings
 
 from gazebo_ros import gazebo_interface
 from std_srvs.srv import Empty
+from gazebo_msgs.srv import GetWorldProperties
 from std_msgs.msg import Float64
 from srdfdom.srdf import SRDF
 
@@ -21,6 +22,31 @@ def unpause(gazebo_namespace):
                 return
         except (rospy.ServiceException, e):
                 print ("Service call failed: %s"%e)
+
+
+# gazebo_ros_control (DefaultRobotHWSim) starts every joint reading at 1 rad and unwraps it by the
+# shortest angular distance, so a joint first read below 1 - pi (a folded knee) comes out 2 pi too
+# high, for the whole run. Take the first readings in a staged posture, knees above that bound and
+# thighs raised so the feet stay off the ground, then set the requested posture.
+def settle_joint_readings(model_name, joint_names, joint_positions, gazebo_namespace):
+        if min(joint_positions) > 1.0 - math.pi + 0.1:
+                return
+        staged = []
+        for name, position in zip(joint_names, joint_positions):
+                if name.endswith('kfe_joint'):
+                        staged.append(max(position, -2.0))
+                elif name.endswith('hfe_joint'):
+                        staged.append(2.5)
+                else:
+                        staged.append(position)
+        gazebo_interface.set_model_configuration_client(model_name, "", joint_names, staged,
+                                                        gazebo_namespace)
+        world = rospy.ServiceProxy(gazebo_namespace + '/get_world_properties', GetWorldProperties)
+        start = world().sim_time
+        rospy.ServiceProxy(gazebo_namespace + '/unpause_physics', Empty)()
+        while world().sim_time < start + 0.01:
+                time.sleep(0.001)
+        rospy.ServiceProxy(gazebo_namespace + '/pause_physics', Empty)()
 
 
 if __name__ == "__main__":
@@ -65,6 +91,7 @@ if __name__ == "__main__":
         
         rospy.wait_for_service('%s/set_model_configuration'%(gazebo_namespace))
         try:
+                settle_joint_readings(model_name, joint_names, joint_positions, gazebo_namespace)
                 success = gazebo_interface.set_model_configuration_client(model_name, param_name,
                                                                   joint_names, joint_positions, gazebo_namespace)
         except (rospy.ServiceException, e):
